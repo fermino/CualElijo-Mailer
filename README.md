@@ -2,9 +2,9 @@
 
 ## Usage
 
-Just configure config.php, then
+Create a MySQL database and import dbdump.sql, configure config.php with your DB and SendGrid access data, and then
 
-To schedule an mail: 
+To schedule an mail (tomorrow [1 day], you can change it :P): 
 
 ```php
 require_once 'class/Mailer.php';
