@@ -75,12 +75,11 @@
 
 								$Sent[$Mail['id']] = $Response->code == 200 ? true : $Response->body;
 
-								if(!is_array($Sent[$Mail['id']]))
-								{
-									$Query = $this->DB->prepare('UPDATE `emails` SET `sent` = 1 WHERE `id` = ?');
+								$Value = $Response->code == 200 ? '1' : '-1';
 
-									$Query->execute(array($Mail['id']));
-								}
+								$Query = $this->DB->prepare('UPDATE `emails` SET `sent` = ? WHERE `id` = ?');
+
+								$Query->execute(array($Value, $Mail['id']));
 							}
 
 							return $Sent;
