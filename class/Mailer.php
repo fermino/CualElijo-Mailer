@@ -28,7 +28,7 @@
 					{
 						$SendAt = (new DateTime($SendIn, new DateTimeZone('UTC')))->format('Y-m-d H:i:s');
 
-						$Query = $this->DB->prepare('INSERT INTO `emails`(`from`, `to`, `subject`, `body`, `created`, `send_at`, `sent`) VALUES (?, ?, ?, ?, NOW(), ?, false)');
+						$Query = $this->DB->prepare('INSERT INTO `mails`(`from`, `to`, `subject`, `body`, `created`, `send_at`, `sent`) VALUES (?, ?, ?, ?, NOW(), ?, false)');
 
 						if($Query->execute(array($From, $To, $Subject, $Body, $SendAt)) && $Query->rowCount() === 1)
 							return true;
@@ -49,7 +49,7 @@
 			{
 				if($this->IsConnected())
 				{
-					$Query = $this->DB->prepare('SELECT `id`, `from`, `to`, `subject`, `body` FROM `emails` WHERE `send_at` <= UTC_TIMESTAMP() AND `sent` = 0');
+					$Query = $this->DB->prepare('SELECT `id`, `from`, `to`, `subject`, `body` FROM `mails` WHERE `send_at` <= UTC_TIMESTAMP() AND `sent` = 0');
 
 					if($Query->execute())
 					{
@@ -77,7 +77,7 @@
 
 								$Value = $Response->code == 200 ? '1' : '-1';
 
-								$Query = $this->DB->prepare('UPDATE `emails` SET `sent` = ? WHERE `id` = ?');
+								$Query = $this->DB->prepare('UPDATE `mails` SET `sent` = ? WHERE `id` = ?');
 
 								$Query->execute(array($Value, $Mail['id']));
 							}
